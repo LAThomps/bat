@@ -14,9 +14,7 @@ const endThresh string = batFiles + "charge_control_end_threshold"
 const capacityLevel string = batFiles + "capacity"
 
 func main() {
-	// for i, arg := range os.Args {
-	// 	fmt.Printf("Argument %d: %s\n", i, arg)
-	// }
+
 	start_old, end_old, capacity := read_current_levels()
 	if len(os.Args) == 1 {
 		fmt.Printf("Current Capacity:    %s", capacity)
