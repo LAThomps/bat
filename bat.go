@@ -42,6 +42,7 @@ func main() {
 	err5 := (0 <= new_end) && (new_end <= 100)
 
 	if !err3 || !err4 || !err5 {
+		fmt.Println("Invalid Input Arguments:")
 		fmt.Println("Start < End:       ", err3)
 		fmt.Println("0 <= Start <= 100: ", err4)
 		fmt.Println("0 <= End <= 100:   ", err5)
