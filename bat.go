@@ -58,6 +58,7 @@ func main() {
 		os.Exit(1)
 	}
 
+	// final res
 	fmt.Printf("Current Capacity:    %s", capacity)
 	fmt.Printf("New Start Threshold: %s\n", os.Args[1])
 	fmt.Printf("New End Threshold:   %s\n", os.Args[2])
