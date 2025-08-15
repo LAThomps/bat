@@ -1,11 +1,11 @@
 package main
 
 import (
+	"errors"
 	"fmt"
+	"io"
 	"os"
 	"strconv"
-	"io"
-	"errors"
 )
 
 const batFiles string = "/sys/class/power_supply/BAT0/"
@@ -36,8 +36,8 @@ func main() {
 		os.Exit(1)
 	}
 
-	// bounds check inputs 
-	err3 := (new_start < new_end) 
+	// bounds check inputs
+	err3 := (new_start < new_end)
 	err4 := (0 <= new_start) && (new_start <= 100)
 	err5 := (0 <= new_end) && (new_end <= 100)
 
@@ -58,14 +58,14 @@ func main() {
 		os.Exit(1)
 	}
 
-	// final res
+	// final result
 	fmt.Printf("Current Capacity:    %s", capacity)
 	fmt.Printf("New Start Threshold: %s\n", os.Args[1])
 	fmt.Printf("New End Threshold:   %s\n", os.Args[2])
 }
 
-func update_kernel_param(filepath string, val string) (error) {
-	
+func update_kernel_param(filepath string, val string) error {
+
 	write_file, err1 := os.OpenFile(filepath, os.O_WRONLY, 0644)
 	if err1 != nil {
 		fmt.Printf("error opening %s\n", filepath)
@@ -81,7 +81,7 @@ func update_kernel_param(filepath string, val string) (error) {
 	return nil
 }
 
-func read_current_levels () (string, string, string) {
+func read_current_levels() (string, string, string) {
 
 	start_file_read, err1 := os.Open(startThresh)
 	end_file_read, err2 := os.Open(endThresh)
