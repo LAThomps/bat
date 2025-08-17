@@ -155,6 +155,7 @@ func read_current_levels() (string, string, string, string) {
 		fmt.Printf("End Threshold File:    %s", err1)
 		fmt.Printf("Capacity File:         %s", err2)
 		fmt.Printf("Status:                %s", err3)
+		os.Exit(1)
 	}
 
 	return init_start, init_end, cap_level, status
