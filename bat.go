@@ -7,6 +7,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"math"
 )
 
 const batFiles string = "/sys/class/power_supply/BAT0/"
@@ -35,7 +36,7 @@ func main() {
 		fmt.Printf("Start Threshold:     %s\n", start_old)
 		fmt.Printf("End Threshold:       %s\n", end_old)
 		fmt.Printf("Status:              %s\n", status)
-		fmt.Printf("Time to End Charge:  %s mins\n", charge_time)
+		fmt.Printf("Time to End Charge:  %s min(s)\n", charge_time)
 		fmt.Printf("Time to 20:          %s\n", time_to_20)
 		fmt.Printf("Time to 0:           %s\n", time_to_0)
 		return
@@ -92,7 +93,7 @@ func main() {
 	fmt.Printf("New Start Threshold: %s\n", os.Args[1])
 	fmt.Printf("New End Threshold:   %s\n", os.Args[2])
 	fmt.Printf("Status:              %s\n", status)
-	fmt.Printf("Time to End Charge:  %s mins\n", charge_time)
+	fmt.Printf("Time to End Charge:  %s min(s)\n", charge_time)
 	fmt.Printf("Time to 20:          %s\n", time_to_20)
 	fmt.Printf("Time to 0:           %s\n", time_to_0)
 }
@@ -126,10 +127,11 @@ func calc_charge_time(capacity_str string, end_thresh_str string) (string, error
 		return "0", nil
 	} 
 
-	perc_to_charge := (float32(end_thresh) - float32(capacity)) / 100
+	perc_to_charge := (float64(end_thresh) - float64(capacity)) / 100
 	charge_time := perc_to_charge * (52.5 / (65 * 0.85))
-	// multiply by 2 to account for slower charging when approaching 80
-	charge_time_mins := strconv.Itoa(int(charge_time * 60) * 2) 
+	// multiply by 1.6 to account for slower charging when approaching 80
+	// will still overestimate by 20-30 seconds
+	charge_time_mins := strconv.Itoa(int(math.Round(charge_time * 60 * 1.6)))
 	return charge_time_mins, nil
 }
 
