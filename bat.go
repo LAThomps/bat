@@ -77,8 +77,13 @@ func main() {
 	}
 
 	charge_time, err6 := calc_charge_time(capacity, os.Args[2])
-	if err6 != nil {
-		fmt.Println("Error calculating charge time")
+	time_to_20, err7 := calc_time_to_perc(capacity, 20)
+	time_to_0, err8 := calc_time_to_perc(capacity, 0)
+	if err6 != nil || err7 != nil || err8 != nil {
+		fmt.Println("Error calculating times")
+		fmt.Printf("Charge Time:   %s", err6)
+		fmt.Printf("Time to 20:    %s", err7)
+		fmt.Printf("Time to 0:     %s", err8)
 		os.Exit(1)
 	}
 
@@ -87,7 +92,9 @@ func main() {
 	fmt.Printf("New Start Threshold: %s\n", os.Args[1])
 	fmt.Printf("New End Threshold:   %s\n", os.Args[2])
 	fmt.Printf("Status:              %s\n", status)
-	fmt.Printf("Time to End Charge:  %s\n", charge_time)
+	fmt.Printf("Time to End Charge:  %s mins\n", charge_time)
+	fmt.Printf("Time to 20:          %s\n", time_to_20)
+	fmt.Printf("Time to 0:           %s\n", time_to_0)
 }
 
 func calc_time_to_perc(capacity_str string, end_perc int) (string, error) {
@@ -121,7 +128,8 @@ func calc_charge_time(capacity_str string, end_thresh_str string) (string, error
 
 	perc_to_charge := (float32(end_thresh) - float32(capacity)) / 100
 	charge_time := perc_to_charge * (52.5 / (65 * 0.85))
-	charge_time_mins := strconv.Itoa(int(charge_time * 60))
+	// multiply by 2 to account for slower charging when approaching 80
+	charge_time_mins := strconv.Itoa(int(charge_time * 60) * 2) 
 	return charge_time_mins, nil
 }
 
