@@ -129,7 +129,7 @@ func calc_charge_time(capacity_str string, end_thresh_str string) (string, error
 
 	perc_to_charge := (float64(end_thresh) - float64(capacity)) / 100
 	charge_time := perc_to_charge * (52.5 / (65 * 0.85))
-	// multiply by 1.6 to account for slower charging when approaching 80
+	// multiply by 1.6 to account for slower charging when approaching 80      
 	// will still overestimate by 20-30 seconds
 	charge_time_mins := strconv.Itoa(int(math.Round(charge_time * 60 * 1.6)))
 	return charge_time_mins, nil
