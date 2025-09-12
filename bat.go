@@ -139,14 +139,14 @@ func update_kernel_param(filepath string, val string) error {
 
 	write_file, err1 := os.OpenFile(filepath, os.O_WRONLY, 0644)
 	if err1 != nil {
-		fmt.Printf("error opening %s\n", filepath)
+		fmt.Printf("error opening %s, %v\n", filepath, err1)
 		return errors.New("error opening file")
 	}
 	defer write_file.Close()
 
 	_, err2 := write_file.WriteString(val)
 	if err2 != nil {
-		fmt.Printf("error writing to %s\n", filepath)
+		fmt.Printf("error writing to %s, %v\n", filepath, err2)
 		return errors.New("error writing to file")
 	}
 	return nil
