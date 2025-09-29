@@ -68,13 +68,30 @@ func main() {
 		os.Exit(1)
 	}
 
-	// update kernel files
-	start_res := update_kernel_param(startThresh, os.Args[1])
-	end_res := update_kernel_param(endThresh, os.Args[2])
-
-	if start_res != nil || end_res != nil {
-		fmt.Println("error updating kernel files, ensure to run with sudo permissions")
+	// move right pointer first if left pointer more, update kernel files
+	end_old_int, err6 := strconv.Atoi(end_old)
+	if err6 != nil {
+		fmt.Println("error converting endThresh to int")
 		os.Exit(1)
+	}
+	if new_start >= end_old_int {
+		// update kernel files
+		end_res := update_kernel_param(endThresh, os.Args[2])
+		start_res := update_kernel_param(startThresh, os.Args[1])
+
+		if start_res != nil || end_res != nil {
+			fmt.Println("error updating kernel files, ensure to run with sudo permissions")
+			os.Exit(1)
+		}
+	} else {
+		// update kernel files
+		start_res := update_kernel_param(startThresh, os.Args[1])
+		end_res := update_kernel_param(endThresh, os.Args[2])
+
+		if start_res != nil || end_res != nil {
+			fmt.Println("error updating kernel files, ensure to run with sudo permissions")
+			os.Exit(1)
+		}
 	}
 
 	charge_time, err6 := calc_charge_time(capacity, os.Args[2])
