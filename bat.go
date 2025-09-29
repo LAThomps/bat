@@ -47,30 +47,30 @@ func main() {
 	}
 
 	// check integer parsability
-	new_start, err1 := strconv.Atoi(os.Args[1])
-	new_end, err2 := strconv.Atoi(os.Args[2])
-	if err1 != nil || err2 != nil {
-		fmt.Println("Error converting Arg1 to int: ", err1)
-		fmt.Println("Error converting Arg2 to int: ", err2)
+	new_start, err0 := strconv.Atoi(os.Args[1])
+	new_end, err1 := strconv.Atoi(os.Args[2])
+	if err0 != nil || err1 != nil {
+		fmt.Println("Error converting Arg1 to int: ", err0)
+		fmt.Println("Error converting Arg2 to int: ", err1)
 		os.Exit(1)
 	}
 
 	// bounds check inputs
-	err3 := (new_start < new_end)
-	err4 := (0 <= new_start) && (new_start <= 100)
-	err5 := (0 <= new_end) && (new_end <= 100)
+	errb0 := (new_start < new_end)
+	errb1 := (0 <= new_start) && (new_start <= 100)
+	errb2 := (0 <= new_end) && (new_end <= 100)
 
-	if !err3 || !err4 || !err5 {
+	if !errb0 || !errb1 || !errb2 {
 		fmt.Println("Invalid Input Arguments:")
-		fmt.Println("Start < End:       ", err3)
-		fmt.Println("0 <= Start <= 100: ", err4)
-		fmt.Println("0 <= End <= 100:   ", err5)
+		fmt.Println("Start < End:       ", errb0)
+		fmt.Println("0 <= Start <= 100: ", errb1)
+		fmt.Println("0 <= End <= 100:   ", errb2)
 		os.Exit(1)
 	}
 
 	// move right pointer first if left pointer more, update kernel files
-	end_old_int, err6 := strconv.Atoi(end_old)
-	if err6 != nil {
+	end_old_int, err0 := strconv.Atoi(end_old)
+	if err0 != nil {
 		fmt.Println("error converting endThresh to int")
 		os.Exit(1)
 	}
@@ -94,14 +94,14 @@ func main() {
 		}
 	}
 
-	charge_time, err6 := calc_charge_time(capacity, os.Args[2])
-	time_to_20, err7 := calc_time_to_perc(capacity, 20)
-	time_to_0, err8 := calc_time_to_perc(capacity, 0)
-	if err6 != nil || err7 != nil || err8 != nil {
+	charge_time, err0 := calc_charge_time(capacity, os.Args[2])
+	time_to_20, err1 := calc_time_to_perc(capacity, 20)
+	time_to_0, err2 := calc_time_to_perc(capacity, 0)
+	if err0 != nil || err1 != nil || err2 != nil {
 		fmt.Println("Error calculating times")
-		fmt.Printf("Charge Time:   %s", err6)
-		fmt.Printf("Time to 20:    %s", err7)
-		fmt.Printf("Time to 0:     %s", err8)
+		fmt.Printf("Charge Time:   %s", err0)
+		fmt.Printf("Time to 20:    %s", err1)
+		fmt.Printf("Time to 0:     %s", err2)
 		os.Exit(1)
 	}
 
